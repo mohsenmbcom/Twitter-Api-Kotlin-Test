@@ -1,9 +1,9 @@
-package com.mohsenmb.twitterauthsearchkotlinsample
+package com.mohsenmb.twitterauthsearchkotlinsample.view.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.mohsenmb.twitterauthsearchkotlinsample.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
