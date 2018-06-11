@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TwitterAuthSearchKotlinSample</string>
+    <string name="offline_message">\"You are offline. Please check your internet settings.\"</string>
+    <string name="unexpected_error_message">An unexpected error happened. Please try again!</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="retry">Retry</string>
+    <string name="authorized">Authorized</string>
 </resources>
