@@ -8,11 +8,11 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by mohsen on 6/11/18.
  */
-data class Entities(@SerializedName("media") @Expose val media: Media?) : Parcelable {
-    constructor(parcel: Parcel) : this(parcel.readParcelable(Media::class.java.classLoader) as Media)
+data class Entities(@SerializedName("media") @Expose val medias: List<Media>?) : Parcelable {
+    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Media))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeParcelable(media, flags)
+        parcel.writeTypedList(medias)
     }
 
     override fun describeContents(): Int {

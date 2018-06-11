@@ -2,6 +2,7 @@ package com.mohsenmb.twitterauthsearchkotlinsample.util
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.util.Base64
 
 /**
@@ -19,4 +20,8 @@ fun Context.isConnected(): Boolean {
 
     val activeNetwork = cm.activeNetworkInfo
     return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+}
+
+fun String.toUri(): Uri {
+    return Uri.parse(this)
 }

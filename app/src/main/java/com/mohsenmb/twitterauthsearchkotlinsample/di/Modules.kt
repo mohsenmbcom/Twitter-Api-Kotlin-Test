@@ -8,10 +8,17 @@ import com.google.gson.GsonBuilder
 import com.mohsenmb.twitterauthsearchkotlinsample.TwitterApplication
 import com.mohsenmb.twitterauthsearchkotlinsample.interaction.AuthorizationInteractor
 import com.mohsenmb.twitterauthsearchkotlinsample.interaction.AuthorizationInteractorImpl
+import com.mohsenmb.twitterauthsearchkotlinsample.interaction.SearchInteractor
+import com.mohsenmb.twitterauthsearchkotlinsample.interaction.SearchInteractorImpl
 import com.mohsenmb.twitterauthsearchkotlinsample.presentation.AuthorizationPresenter
 import com.mohsenmb.twitterauthsearchkotlinsample.presentation.AuthorizationPresenterImpl
+import com.mohsenmb.twitterauthsearchkotlinsample.presentation.SearchPresenter
+import com.mohsenmb.twitterauthsearchkotlinsample.presentation.SearchPresenterImpl
 import com.mohsenmb.twitterauthsearchkotlinsample.service.TwitterWebService
+import com.mohsenmb.twitterauthsearchkotlinsample.service.model.Token
+import com.mohsenmb.twitterauthsearchkotlinsample.util.SessionManager
 import com.mohsenmb.twitterauthsearchkotlinsample.view.AuthorizationView
+import com.mohsenmb.twitterauthsearchkotlinsample.view.SearchTweetsView
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -68,7 +75,7 @@ class ApiModule {
 
     @Singleton
     @Provides
-    fun provideGson(): Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+    fun provideGson(): Gson = GsonBuilder().setLenient().excludeFieldsWithoutExposeAnnotation().create()
 
     @Provides
     @Singleton
@@ -78,6 +85,9 @@ class ApiModule {
     @Provides
     @Singleton
     fun provideRxJavaCallAdapterFactory(): CallAdapter.Factory = RxJava2CallAdapterFactory.create()
+
+    @Provides
+    fun provideAccessToken(sessionManager: SessionManager): Token = sessionManager.getSessionToken()
 }
 
 @Module
@@ -113,4 +123,19 @@ class AuthorizationModule(private val authorizationView: AuthorizationView) {
     @Provides
     fun provideAuthorizationInteractor(interactor: AuthorizationInteractorImpl):
             AuthorizationInteractor = interactor
+}
+
+@Module
+class SearchTweetsModule(private val searchTweetsView: SearchTweetsView) {
+    @Provides
+    fun provideSearchTweetsView(): SearchTweetsView = searchTweetsView
+
+    @Provides
+    fun provideSearchTweetsPresenter(presenter: SearchPresenterImpl): SearchPresenter {
+        presenter.searchTweetsView = searchTweetsView
+        return presenter
+    }
+
+    @Provides
+    fun provideSearchTweetsInteractor(interactor: SearchInteractorImpl): SearchInteractor = interactor
 }

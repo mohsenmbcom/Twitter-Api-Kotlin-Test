@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.mohsenmb.twitterauthsearchkotlinsample.R
 import com.mohsenmb.twitterauthsearchkotlinsample.TwitterApplication
 import com.mohsenmb.twitterauthsearchkotlinsample.di.AuthorizationModule
@@ -43,6 +42,10 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
     override fun onAuthorized() {
         tvProgress.text = getString(R.string.authorized)
         prg.visibility = View.INVISIBLE
+        fragmentManager
+                ?.beginTransaction()
+                ?.replace(R.id.container, SearchTweetsFragment())
+                ?.commit()
     }
 
     override fun showProgress() {

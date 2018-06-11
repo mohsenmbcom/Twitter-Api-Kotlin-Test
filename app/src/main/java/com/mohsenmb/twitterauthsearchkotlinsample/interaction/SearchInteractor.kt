@@ -25,7 +25,7 @@ class SearchInteractorImpl @Inject constructor(private val twitterWebService: Tw
 
     override fun searchTweets(query: String): Observable<SearchResponse> {
         if (searchDisposable == null || searchDisposable!!.isDisposed) {
-            twitterWebService.searchTweets(generateTwitterBearerAuthorization(token.accessToken), query)
+            twitterWebService.searchTweets(generateTwitterBearerAuthorization(token.accessToken), query = query)
                     .subscribeOn(Schedulers.io())
                     .subscribe(searchReplaySubject)
             searchDisposable = searchReplaySubject.subscribe({},
