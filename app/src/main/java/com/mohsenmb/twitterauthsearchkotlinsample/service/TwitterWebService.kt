@@ -12,26 +12,17 @@ interface TwitterWebService {
     @FormUrlEncoded
     @POST("/oauth2/token")
     @Headers(
-            "Content-Type: application/x-www-form-urlencoded;charset=UTF-8",
-            "Host: api.twitter.com"
+            "Content-Type: application/x-www-form-urlencoded;charset=UTF-8"
     )
     fun authorize(@Header("Authorization") basicAuthorization: String,
                   @Field("grant_type") grantType: String = "client_credentials"): Observable<Token>
 
     @GET("/1.1/search/tweets.json")
-    @Headers(
-            "Host: api.twitter.com",
-            "Accept-Encoding: gzip"
-    )
     fun searchTweets(@Header("Authorization") bearerToken: String,
                      @Query("q") query: String,
                      @Query("count") count: Int = 10): Observable<SearchResponse>
 
     @GET("/1.1/search/tweets.json/{next_results}&count={count}")
-    @Headers(
-            "Host: api.twitter.com",
-            "Accept-Encoding: gzip"
-    )
     fun loadSearchNextPage(@Header("Authorization") bearerToken: String,
                            @Path("next_result") nextResults: String,
                            @Path("count") count: Int = 10): Observable<SearchResponse>
