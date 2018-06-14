@@ -34,9 +34,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // AppCompat & UI
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -47,12 +47,8 @@ dependencies {
     implementation 'io.reactivex:rxkotlin:0.60.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     // Dagger
-    def daggerVersion = '2.15'
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
-    implementation "com.google.dagger:dagger:$daggerVersion"
-    implementation "com.google.dagger:dagger-android:$daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    implementation 'com.google.dagger:dagger:2.15'
+    kapt "com.google.dagger:dagger-compiler:2.15"
     // Retrofit & Picasso
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'

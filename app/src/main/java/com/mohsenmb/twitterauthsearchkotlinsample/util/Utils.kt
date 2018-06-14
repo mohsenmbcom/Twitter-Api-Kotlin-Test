@@ -21,7 +21,3 @@ fun Context.isConnected(): Boolean {
     val activeNetwork = cm.activeNetworkInfo
     return activeNetwork != null && activeNetwork.isConnectedOrConnecting
 }
-
-fun String.toUri(): Uri {
-    return Uri.parse(this)
-}

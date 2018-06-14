@@ -5,7 +5,6 @@ import com.mohsenmb.twitterauthsearchkotlinsample.view.fragment.AuthorizationFra
 import com.mohsenmb.twitterauthsearchkotlinsample.view.fragment.SearchTweetsFragment
 import dagger.Component
 import dagger.Subcomponent
-import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 
