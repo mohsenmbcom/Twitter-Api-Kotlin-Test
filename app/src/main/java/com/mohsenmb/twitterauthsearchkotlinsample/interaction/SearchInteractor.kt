@@ -21,17 +21,18 @@ interface SearchInteractor : BaseInteractor {
 class SearchInteractorImpl @Inject constructor(private val twitterWebService: TwitterWebService,
                                                private val token: Token) : SearchInteractor {
     private var searchDisposable: Disposable? = null
-    private var searchReplaySubject: ReplaySubject<SearchResponse> = ReplaySubject.create()
+    private lateinit var searchReplaySubject: ReplaySubject<SearchResponse>
 
     override fun searchTweets(query: String): Observable<SearchResponse> {
         if (searchDisposable == null || searchDisposable!!.isDisposed) {
+            searchReplaySubject = ReplaySubject.create()
             twitterWebService.searchTweets(generateTwitterBearerAuthorization(token.accessToken), query = query)
                     .subscribeOn(Schedulers.io())
                     .subscribe(searchReplaySubject)
             searchDisposable = searchReplaySubject.subscribe({},
                     { error -> error.printStackTrace() })
         }
-        return searchReplaySubject.share()
+        return searchReplaySubject.hide()
     }
 
     override fun loadSearchResultsNextPage(nextResults: String): Observable<SearchResponse> {
@@ -43,7 +44,7 @@ class SearchInteractorImpl @Inject constructor(private val twitterWebService: Tw
             searchDisposable = searchReplaySubject.subscribe({},
                     { error -> error.printStackTrace() })
         }
-        return searchReplaySubject.share()
+        return searchReplaySubject.hide()
     }
 
     override fun destroy() {

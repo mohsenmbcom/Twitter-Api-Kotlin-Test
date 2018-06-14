@@ -1,9 +1,11 @@
 package com.mohsenmb.twitterauthsearchkotlinsample.util
 
+import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.util.Base64
+import android.view.inputmethod.InputMethodManager
 
 /**
  * Created by mohsen on 6/10/18.
@@ -20,4 +22,12 @@ fun Context.isConnected(): Boolean {
 
     val activeNetwork = cm.activeNetworkInfo
     return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+}
+
+fun Activity.hideKeyboard() {
+    val view = this.currentFocus
+    if (view != null) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

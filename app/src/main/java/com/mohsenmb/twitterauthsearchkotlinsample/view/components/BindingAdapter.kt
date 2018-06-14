@@ -19,6 +19,7 @@ object BindingAdapter {
                 Picasso
                         .get()
                         .load(Uri.parse(url))
+                        .centerCrop()
                         .fit()
                         .into(view)
             }

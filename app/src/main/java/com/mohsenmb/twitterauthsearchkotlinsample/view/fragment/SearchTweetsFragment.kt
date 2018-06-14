@@ -2,6 +2,7 @@ package com.mohsenmb.twitterauthsearchkotlinsample.view.fragment
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.mohsenmb.twitterauthsearchkotlinsample.TwitterApplication
 import com.mohsenmb.twitterauthsearchkotlinsample.di.SearchTweetsModule
 import com.mohsenmb.twitterauthsearchkotlinsample.presentation.SearchPresenter
 import com.mohsenmb.twitterauthsearchkotlinsample.service.model.Tweet
+import com.mohsenmb.twitterauthsearchkotlinsample.util.hideKeyboard
 import com.mohsenmb.twitterauthsearchkotlinsample.util.isConnected
 import com.mohsenmb.twitterauthsearchkotlinsample.view.SearchTweetsView
 import com.mohsenmb.twitterauthsearchkotlinsample.view.components.TweetsAdapter
@@ -53,6 +55,8 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
             }
             true
         }
+        srlTweets.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorPrimary), ContextCompat.getColor(context!!, R.color.colorAccent))
+        srlTweets.setProgressViewOffset(false, 0, resources.getDimension(R.dimen.progress_top_padding).toInt())
         srlTweets.setOnRefreshListener {
             search()
         }
@@ -71,6 +75,7 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
     }
 
     override fun showTweets(tweets: List<Tweet>) {
+        activity?.hideKeyboard()
         if (firstPage) {
             this.tweets.clear()
             this.tweets.addAll(tweets)
