@@ -17,6 +17,7 @@ import com.mohsenmb.twitterauthsearchkotlinsample.service.model.Tweet
 import com.mohsenmb.twitterauthsearchkotlinsample.util.hideKeyboard
 import com.mohsenmb.twitterauthsearchkotlinsample.util.isConnected
 import com.mohsenmb.twitterauthsearchkotlinsample.view.SearchTweetsView
+import com.mohsenmb.twitterauthsearchkotlinsample.view.components.OnHashtagClickListener
 import com.mohsenmb.twitterauthsearchkotlinsample.view.components.TweetsAdapter
 import kotlinx.android.synthetic.main.fragment_search_tweets.*
 import javax.inject.Inject
@@ -62,7 +63,14 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
         srlTweets.setOnRefreshListener {
             search()
         }
-        rvTweets.adapter = TweetsAdapter(tweets)
+        val tweetsAdapter = TweetsAdapter(tweets)
+        tweetsAdapter.onHashtagClickListener = object : OnHashtagClickListener {
+            override fun onHashtagClicked(hashtag: String) {
+                etSearch.setText(hashtag)
+                search()
+            }
+        }
+        rvTweets.adapter = tweetsAdapter
         rvTweets.layoutManager = LinearLayoutManager(context)
         rvTweets.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
