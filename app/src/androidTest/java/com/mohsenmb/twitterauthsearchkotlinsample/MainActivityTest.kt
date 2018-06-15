@@ -1,14 +1,15 @@
 package com.mohsenmb.twitterauthsearchkotlinsample
 
 import android.content.Intent
-
-import android.support.test.espresso.contrib.RecyclerViewActions
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+import android.content.pm.ActivityInfo
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.Espresso.pressBack
 import android.support.test.espresso.action.ViewActions.*
+import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.rule.ActivityTestRule
+import android.support.test.runner.AndroidJUnit4
+import android.support.v7.widget.RecyclerView
 import com.mohsenmb.twitterauthsearchkotlinsample.view.activity.MainActivity
 import org.junit.Before
 import org.junit.Rule
@@ -31,7 +32,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun testIt() {
+    fun authorizationAndSearchPage_SimplePhraseSearch_ShowSearchList() {
 
         mainActivity.launchActivity(Intent())
 
@@ -52,9 +53,191 @@ class MainActivityTest {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
+        // end of story ;)
+    }
 
-        // back to the grid
-//        pressBack()
+    @Test
+    fun searchAndTweetPage_PhraseSearch_ShowInnerPage() {
+
+        mainActivity.launchActivity(Intent())
+
+        // wait for loading the list
+        try {
+            Thread.sleep(500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        onView(withId(R.id.etSearch)).perform(typeText("DeadPool"),
+                pressImeActionButton())
+
+
+        // wait a sec
+        try {
+            Thread.sleep(1000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // scroll to the end of the list
+        onView(withId(R.id.rvTweets))
+                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(9))
+
+
+        // wait for the next page loading
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // scroll to the end of the list
+        onView(withId(R.id.rvTweets))
+                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(19))
+
+
+        // wait for 1.5 Second
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // click on the 18th item (an item of the second page) to show the details fragment
+        onView(withId(R.id.rvTweets))
+                .perform(RecyclerViewActions
+                        .actionOnItemAtPosition<RecyclerView.ViewHolder>(18, ChildViewAction.clickChildViewWithId(R.id.btnViewTweet)))
+
+        // wait for 1.5 Second
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        pressBack()
+        // end of story ;)
+    }
+
+    @Test
+    fun searchAndTweetPage_PhraseSearchAndScreenRotation_ContinueUserJourney() {
+        mainActivity.launchActivity(Intent())
+        // wait for loading the list
+        try {
+            Thread.sleep(500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        onView(withId(R.id.etSearch)).perform(typeText("DeadPool"),
+                pressImeActionButton())
+
+
+        // wait a sec
+        try {
+            Thread.sleep(1000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        
+        // wait a sec
+        try {
+            Thread.sleep(1000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // scroll to the end of the list
+        onView(withId(R.id.rvTweets))
+                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(9))
+
+        // wait for the next page loading
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // Rotation
+        mainActivity.activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        try {
+            Thread.sleep(1000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        // hide keyboard
+        pressBack()
+        try {
+            Thread.sleep(1000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // scroll to the end of the list
+        onView(withId(R.id.rvTweets))
+                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(19))
+
+
+        // wait for 1.5 Second
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // click on the 18th item (an item of the second page) to show the details fragment
+        onView(withId(R.id.rvTweets))
+                .perform(RecyclerViewActions
+                        .actionOnItemAtPosition<RecyclerView.ViewHolder>(14, ChildViewAction.clickChildViewWithId(R.id.btnViewTweet)))
+
+        // wait for 1.5 Second
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // click on the 18th item (an item of the second page) to show the details fragment
+        onView(withId(R.id.rvTweets))
+                .perform(RecyclerViewActions
+                        .actionOnItemAtPosition<RecyclerView.ViewHolder>(15, ChildViewAction.clickChildViewWithId(R.id.btnViewTweet)))
+
+        // wait for 1.5 Second
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        mainActivity.activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // wait for 1.5 Sec
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        pressBack()
+
+        // wait for 1.5 Sec
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        // scroll to the top of the list
+        onView(withId(R.id.rvTweets))
+                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
+
+        // wait for 1.5 Sec
+        try {
+            Thread.sleep(1500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
         // end of story ;)
     }
 }

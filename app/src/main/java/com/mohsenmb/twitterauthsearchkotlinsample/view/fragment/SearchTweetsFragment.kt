@@ -139,11 +139,11 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
     }
 
     override fun hideProgress() {
-        srlTweets.isRefreshing = false
+        srlTweets?.isRefreshing = false
     }
 
     override fun showProgress() {
-        srlTweets.isRefreshing = true
+        srlTweets?.isRefreshing = true
     }
 
     override fun retry() {
