@@ -6,23 +6,19 @@
         <variable
             name="tweet"
             type="com.mohsenmb.twitterauthsearchkotlinsample.service.model.Tweet" />
-
-        <import type="android.view.View" />
     </data>
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="@android:color/white">
+        android:layout_height="match_parent"
+        android:background="?android:windowBackground"
+        android:clickable="true"
+        android:focusable="true">
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/imgAvatar"
@@ -78,15 +74,14 @@
             <ImageView
                 android:id="@+id/imgTweetMedia"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:src="@{tweet.entities.medias}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="16:9"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTweetText"
-                app:layout_constraintVertical_bias="0"
+                app:srcFullSize="@{tweet.entities.medias}"
                 tools:src="#123"
                 tools:visibility="visible" />
 
@@ -100,25 +95,13 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:textSize="12sp"
                 app:date="@{tweet.createdAt}"
-                app:layout_constraintBottom_toBottomOf="@+id/btnViewTweet"
-                app:layout_constraintEnd_toStartOf="@+id/btnViewTweet"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/btnViewTweet"
-                tools:text="jan 20" />
-
-            <Button
-                android:id="@+id/btnViewTweet"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/view_tweet"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgTweetMedia" />
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgTweetMedia"
+                app:layout_constraintVertical_bias="0"
+                tools:text="jan 20" />
         </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
+    </android.support.v4.widget.NestedScrollView>
+
 </layout>

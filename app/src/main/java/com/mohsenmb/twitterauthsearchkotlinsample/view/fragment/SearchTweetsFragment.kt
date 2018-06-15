@@ -18,6 +18,7 @@ import com.mohsenmb.twitterauthsearchkotlinsample.util.hideKeyboard
 import com.mohsenmb.twitterauthsearchkotlinsample.util.isConnected
 import com.mohsenmb.twitterauthsearchkotlinsample.view.SearchTweetsView
 import com.mohsenmb.twitterauthsearchkotlinsample.view.components.OnHashtagClickListener
+import com.mohsenmb.twitterauthsearchkotlinsample.view.components.OnTweetClickListener
 import com.mohsenmb.twitterauthsearchkotlinsample.view.components.TweetsAdapter
 import kotlinx.android.synthetic.main.fragment_search_tweets.*
 import javax.inject.Inject
@@ -25,6 +26,8 @@ import javax.inject.Inject
 /**
  * Created by mohsen on 6/11/18.
  */
+const val ARG_TWEETS = "tweets"
+const val ARG_QUERY = "query"
 class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
 
     init {
@@ -70,6 +73,11 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
                 search()
             }
         }
+        tweetsAdapter.onTweetClickListener = object : OnTweetClickListener {
+            override fun onTweetClicked(tweet: Tweet) {
+                getMainActivity()?.showTweetFragment(tweet)
+            }
+        }
         rvTweets.adapter = tweetsAdapter
         rvTweets.layoutManager = LinearLayoutManager(context)
         rvTweets.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -84,6 +92,23 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
                 }
             }
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(ARG_QUERY, etSearch.text.toString())
+        outState.putParcelableArrayList(ARG_TWEETS, ArrayList(tweets))
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null) {
+            etSearch.setText(savedInstanceState.getString(ARG_QUERY, ""))
+            val savedTweets = savedInstanceState.getParcelableArrayList<Tweet>(ARG_TWEETS)
+            tweets.clear()
+            tweets.addAll(savedTweets)
+            rvTweets.adapter.notifyDataSetChanged()
+        }
     }
 
     private fun search() {

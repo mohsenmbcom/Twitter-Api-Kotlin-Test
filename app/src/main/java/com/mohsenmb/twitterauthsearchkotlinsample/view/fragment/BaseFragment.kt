@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.widget.Toast
 import com.mohsenmb.twitterauthsearchkotlinsample.R
 import com.mohsenmb.twitterauthsearchkotlinsample.view.BaseView
+import com.mohsenmb.twitterauthsearchkotlinsample.view.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_search_tweets.*
 
 /**
@@ -25,7 +26,7 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     override fun showRetry() {
         Snackbar
-                .make(clSearch, R.string.please_try_again, Snackbar.LENGTH_INDEFINITE)
+                .make(view!!, R.string.please_try_again, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, {
                     retry()
                 })
@@ -33,4 +34,11 @@ abstract class BaseFragment : Fragment(), BaseView {
     }
 
     abstract fun retry()
+
+    fun getMainActivity(): MainActivity? {
+        if (activity != null && activity is MainActivity) {
+            return activity as MainActivity
+        }
+        return null
+    }
 }

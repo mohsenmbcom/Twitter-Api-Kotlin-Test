@@ -41,10 +41,7 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
     override fun onAuthorized() {
         tvProgress.text = getString(R.string.authorized)
         prg.visibility = View.INVISIBLE
-        fragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.container, SearchTweetsFragment())
-                ?.commit()
+        getMainActivity()?.showSearchFragment()
     }
 
     override fun showProgress() {

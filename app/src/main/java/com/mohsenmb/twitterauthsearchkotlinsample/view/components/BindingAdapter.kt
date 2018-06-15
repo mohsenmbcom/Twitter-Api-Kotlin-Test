@@ -30,6 +30,22 @@ object BindingAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("srcFullSize")
+    fun setFullImageUrl(view: ImageView, medias: List<Media>?) {
+        if (medias == null) {
+            view.visibility = View.GONE
+        } else if (medias[0].type.contentEquals("photo")) {
+            val url = medias[0].mediaUrl
+            if (url != null) {
+                Picasso
+                        .get()
+                        .load(Uri.parse(url))
+                        .into(view)
+            }
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("avatar")
     fun setAvatarUrl(view: ImageView, url: String?) {
         if (url != null) {

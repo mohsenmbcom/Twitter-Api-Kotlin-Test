@@ -6,4 +6,5 @@
     <string name="retry">Retry</string>
     <string name="authorized">Authorized</string>
     <string name="search_tweets">Search Tweets...</string>
+    <string name="view_tweet">View Tweet</string>
 </resources>

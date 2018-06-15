@@ -3,7 +3,6 @@ package com.mohsenmb.twitterauthsearchkotlinsample.view.components
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
-import android.text.method.MovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.mohsenmb.twitterauthsearchkotlinsample.BR
@@ -18,6 +17,7 @@ import kotlinx.android.synthetic.main.row_tweet.view.*
  */
 class TweetsAdapter(private val tweets: List<Tweet>) : RecyclerView.Adapter<DataBindingViewHolder>() {
     lateinit var onHashtagClickListener: OnHashtagClickListener
+    lateinit var onTweetClickListener: OnTweetClickListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ViewDataBinding =
@@ -37,14 +37,25 @@ class TweetsAdapter(private val tweets: List<Tweet>) : RecyclerView.Adapter<Data
             override fun onLinkClicked(url: String): Boolean {
                 if (::onHashtagClickListener.isInitialized) {
                     onHashtagClickListener.onHashtagClicked(url)
-                    return true
+                    return false
                 }
-                return false
+                return true
             }
         })
+        holder.itemView.setOnClickListener {
+            if (::onTweetClickListener.isInitialized) {
+                onTweetClickListener.onTweetClicked(tweets[holder.adapterPosition])
+            }
+        }
+        holder.itemView.btnViewTweet.setOnClickListener {
+            holder.itemView.callOnClick()
+        }
     }
 }
 
 interface OnHashtagClickListener {
     fun onHashtagClicked(hashtag: String)
+}
+interface OnTweetClickListener {
+    fun onTweetClicked(tweet: Tweet)
 }
