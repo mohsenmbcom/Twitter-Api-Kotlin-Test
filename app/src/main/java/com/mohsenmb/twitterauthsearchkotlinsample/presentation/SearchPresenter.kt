@@ -19,7 +19,8 @@ class SearchPresenterImpl @Inject constructor(private val interactor: SearchInte
     : SearchPresenter {
 
     lateinit var searchTweetsView: SearchTweetsView
-    var nextResults: String? = null
+    var maxId: String? = null
+    lateinit var query: String
 
     private lateinit var disposable: Disposable
 
@@ -41,8 +42,10 @@ class SearchPresenterImpl @Inject constructor(private val interactor: SearchInte
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     searchTweetsView.hideProgress()
-                    searchTweetsView.showTweets(it.tweets)
-                    nextResults = it.searchMetaData.nextResults
+                    val canLoadMore = it.searchMetaData.nextResults != null
+                    maxId = it.searchMetaData.maxId
+                    this.query = it.searchMetaData.query
+                    searchTweetsView.showTweets(it.tweets, canLoadMore)
                 }, {
                     searchTweetsView.hideProgress()
 
@@ -57,14 +60,14 @@ class SearchPresenterImpl @Inject constructor(private val interactor: SearchInte
 
     override fun loadNextPage(isConnected: Boolean) {
         searchTweetsView.showProgress()
-        if (nextResults != null) {
+        if (maxId != null) {
             disposable = interactor
-                    .loadSearchResultsNextPage(nextResults!!)
+                    .loadSearchResultsNextPage(query, maxId!!)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         searchTweetsView.hideProgress()
-                        searchTweetsView.showTweets(it.tweets)
-                        nextResults = it.searchMetaData.nextResults
+                        searchTweetsView.showTweets(it.tweets, it.searchMetaData.nextResults != null)
+                        maxId = it.searchMetaData.maxId
                     }, {
                         searchTweetsView.hideProgress()
 

@@ -15,7 +15,7 @@ import javax.inject.Inject
  */
 interface SearchInteractor : BaseInteractor {
     fun searchTweets(query: String): Observable<SearchResponse>
-    fun loadSearchResultsNextPage(nextResults: String): Observable<SearchResponse>
+    fun loadSearchResultsNextPage(query: String, maxId: String): Observable<SearchResponse>
 }
 
 class SearchInteractorImpl @Inject constructor(private val twitterWebService: TwitterWebService,
@@ -32,19 +32,22 @@ class SearchInteractorImpl @Inject constructor(private val twitterWebService: Tw
             searchDisposable = searchReplaySubject.subscribe({},
                     { error -> error.printStackTrace() })
         }
-        return searchReplaySubject.hide()
+        return searchReplaySubject.share()
     }
 
-    override fun loadSearchResultsNextPage(nextResults: String): Observable<SearchResponse> {
+    override fun loadSearchResultsNextPage(query: String, maxId: String): Observable<SearchResponse> {
         if (searchDisposable == null || searchDisposable!!.isDisposed) {
+            searchReplaySubject = ReplaySubject.create()
             twitterWebService
-                    .loadSearchNextPage(generateTwitterBearerAuthorization(token.accessToken), nextResults)
+                    .loadSearchNextPage(
+                            generateTwitterBearerAuthorization(token.accessToken),
+                            query, maxId)
                     .subscribeOn(Schedulers.io())
                     .subscribe(searchReplaySubject)
             searchDisposable = searchReplaySubject.subscribe({},
                     { error -> error.printStackTrace() })
         }
-        return searchReplaySubject.hide()
+        return searchReplaySubject.share()
     }
 
     override fun destroy() {

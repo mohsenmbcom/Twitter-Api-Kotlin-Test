@@ -4,8 +4,10 @@ import android.databinding.BindingAdapter
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.mohsenmb.twitterauthsearchkotlinsample.service.model.Media
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
 
 object BindingAdapter {
     @JvmStatic
@@ -37,5 +39,13 @@ object BindingAdapter {
                     .transform(PicassoCircleTransformer())
                     .into(view)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("date")
+    fun setDate(view: TextView, dateStr: String) {
+        val defaultFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy")
+        val dateFormat = SimpleDateFormat("EEE MMM dd yyyy   HH:mm:ss")
+        view.text = dateFormat.format(defaultFormat.parse(dateStr))
     }
 }

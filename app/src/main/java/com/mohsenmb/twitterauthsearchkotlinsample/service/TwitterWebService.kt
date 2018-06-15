@@ -22,8 +22,10 @@ interface TwitterWebService {
                      @Query("q") query: String,
                      @Query("count") count: Int = 10): Observable<SearchResponse>
 
-    @GET("/1.1/search/tweets.json/{next_results}&count={count}")
+    @GET("/1.1/search/tweets.json")
     fun loadSearchNextPage(@Header("Authorization") bearerToken: String,
-                           @Path("next_result") nextResults: String,
-                           @Path("count") count: Int = 10): Observable<SearchResponse>
+                           @Query("q") query: String,
+                           @Query("since_id") maxId: String,
+                           @Query("include_entities") includeEntities: Int = 1,
+                           @Query("count") count: Int = 10): Observable<SearchResponse>
 }

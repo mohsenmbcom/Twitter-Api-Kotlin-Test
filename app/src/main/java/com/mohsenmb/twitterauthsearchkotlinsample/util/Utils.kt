@@ -3,7 +3,6 @@ package com.mohsenmb.twitterauthsearchkotlinsample.util
 import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.util.Base64
 import android.view.inputmethod.InputMethodManager
 

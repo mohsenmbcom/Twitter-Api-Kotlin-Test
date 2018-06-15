@@ -10,4 +10,5 @@ data class SearchResponse(@SerializedName("statuses") @Expose val tweets: List<T
                           @SerializedName("search_metadata") @Expose val searchMetaData: SearchMetaData)
 
 data class SearchMetaData(@SerializedName("query") @Expose val query: String,
-                          @SerializedName("next_results") @Expose val nextResults: String)
+                          @SerializedName("next_results") @Expose val nextResults: String?,
+                          @SerializedName("max_id_str") @Expose val maxId: String)

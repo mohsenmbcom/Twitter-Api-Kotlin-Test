@@ -1,9 +1,10 @@
 package com.mohsenmb.twitterauthsearchkotlinsample.view.fragment
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +34,8 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
                 ?.inject(this)
     }
 
-    var firstPage = true
+    private var firstPage = true
+    private var canLoadMore: Boolean = true
     var tweets: MutableList<Tweet> = mutableListOf()
 
     @Inject
@@ -45,7 +47,7 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        etSearch.setOnEditorActionListener { v, actionId, event ->
+        etSearch.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 if (v.text.trim().length > 2) {
                     firstPage = true
@@ -62,6 +64,18 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
         }
         rvTweets.adapter = TweetsAdapter(tweets)
         rvTweets.layoutManager = LinearLayoutManager(context)
+        rvTweets.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager: LinearLayoutManager = recyclerView!!.layoutManager as LinearLayoutManager
+                if (layoutManager.findLastVisibleItemPosition() == recyclerView.adapter.itemCount - 1) {
+                    if (canLoadMore && !srlTweets.isRefreshing) {
+                        firstPage = false
+                        presenter.loadNextPage(context?.isConnected() ?: false)
+                    }
+                }
+            }
+        })
     }
 
     private fun search() {
@@ -74,26 +88,21 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
         }
     }
 
-    override fun showTweets(tweets: List<Tweet>) {
+    override fun showTweets(loadedTweets: List<Tweet>, canLoadMore: Boolean) {
         activity?.hideKeyboard()
+        this.canLoadMore = canLoadMore
         if (firstPage) {
+            val count = this.tweets.size
             this.tweets.clear()
-            this.tweets.addAll(tweets)
-            rvTweets.adapter.notifyDataSetChanged()
+            this.tweets.addAll(loadedTweets)
+            rvTweets.adapter.notifyItemRangeRemoved(0, count)
+            rvTweets.adapter.notifyItemRangeInserted(0, loadedTweets.size)
         } else {
             val lastIndex = this.tweets.size
-            this.tweets.addAll(tweets)
-            rvTweets.adapter.notifyItemRangeInserted(lastIndex, tweets.size)
+            this.tweets.addAll(loadedTweets)
+            rvTweets.adapter.notifyItemRangeInserted(lastIndex, loadedTweets.size)
         }
-    }
-
-    override fun showRetry() {
-        Snackbar
-                .make(clSearch, R.string.please_try_again, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, {
-                    search()
-                })
-                .show()
+        Log.e("COUNT", "Count=${rvTweets.adapter.itemCount}")
     }
 
     override fun hideProgress() {
@@ -102,5 +111,9 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
 
     override fun showProgress() {
         srlTweets.isRefreshing = true
+    }
+
+    override fun retry() {
+        search()
     }
 }

@@ -1,6 +1,5 @@
 package com.mohsenmb.twitterauthsearchkotlinsample.di
 
-import com.mohsenmb.twitterauthsearchkotlinsample.view.activity.MainActivity
 import com.mohsenmb.twitterauthsearchkotlinsample.view.fragment.AuthorizationFragment
 import com.mohsenmb.twitterauthsearchkotlinsample.view.fragment.SearchTweetsFragment
 import dagger.Component

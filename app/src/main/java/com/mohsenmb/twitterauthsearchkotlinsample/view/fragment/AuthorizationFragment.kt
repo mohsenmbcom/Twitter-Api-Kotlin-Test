@@ -1,7 +1,6 @@
 package com.mohsenmb.twitterauthsearchkotlinsample.view.fragment
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,13 +55,8 @@ class AuthorizationFragment : BaseFragment(), AuthorizationView {
         prg.visibility = View.INVISIBLE
     }
 
-    override fun showRetry() {
-        Snackbar
-                .make(clAuthorization, R.string.please_try_again, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, {
-                    authorizationPresenter.authorize(context?.isConnected() ?: false)
-                })
-                .show()
+    override fun retry() {
+        authorizationPresenter.authorize(context?.isConnected() ?: false)
     }
 
 }
