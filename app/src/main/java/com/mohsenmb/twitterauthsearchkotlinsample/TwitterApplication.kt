@@ -9,7 +9,7 @@ import com.mohsenmb.twitterauthsearchkotlinsample.di.MainComponent
 /**
  * Created by mohsen on 6/11/18.
  */
-class TwitterApplication : Application() {
+open class TwitterApplication : Application() {
     companion object {
         lateinit var INSTANCE: TwitterApplication
     }
@@ -23,7 +23,7 @@ class TwitterApplication : Application() {
         component = createComponent()
     }
 
-    private fun createComponent(): MainComponent {
+    open fun createComponent(): MainComponent {
         return DaggerMainComponent
                 .builder()
                 .androidModule(AndroidModule(this))

@@ -37,11 +37,11 @@ import javax.inject.Singleton
 const val API_BASE_URL: String = "https://api.twitter.com"
 
 @Module
-class ApiModule {
+open class ApiModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): TwitterWebService {
+    open fun provideApiService(retrofit: Retrofit): TwitterWebService {
         return retrofit.create(TwitterWebService::class.java)
     }
 
