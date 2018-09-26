@@ -7,6 +7,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        sample_release {
+            keyAlias 'Mohsen'
+            keyPassword '123456'
+            storeFile file('keystore/signfile.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.mohsenmb.twitterauthsearchkotlinsample"
@@ -15,6 +23,7 @@ android {
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "com.mohsenmb.twitterauthsearchkotlinsample.TwitterTestRunner"
+        signingConfig signingConfigs.sample_release
     }
     buildTypes {
         release {
@@ -22,14 +31,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     dataBinding {
         enabled = true
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
     }
 }
 
