@@ -81,10 +81,10 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
         rvTweets.adapter = tweetsAdapter
         rvTweets.layoutManager = LinearLayoutManager(context)
         rvTweets.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val layoutManager: LinearLayoutManager = recyclerView!!.layoutManager as LinearLayoutManager
-                if (layoutManager.findLastVisibleItemPosition() == recyclerView.adapter.itemCount - 1) {
+                val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+                if (layoutManager.findLastVisibleItemPosition() == recyclerView.adapter!!.itemCount - 1) {
                     if (canLoadMore && !srlTweets.isRefreshing) {
                         firstPage = false
                         presenter.loadNextPage(context?.isConnected() ?: false)
@@ -107,7 +107,7 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
             val savedTweets = savedInstanceState.getParcelableArrayList<Tweet>(ARG_TWEETS)
             tweets.clear()
             tweets.addAll(savedTweets)
-            rvTweets.adapter.notifyDataSetChanged()
+            rvTweets.adapter?.notifyDataSetChanged()
         }
     }
 
@@ -128,14 +128,14 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
             val count = this.tweets.size
             this.tweets.clear()
             this.tweets.addAll(loadedTweets)
-            rvTweets.adapter.notifyItemRangeRemoved(0, count)
-            rvTweets.adapter.notifyItemRangeInserted(0, loadedTweets.size)
+            rvTweets.adapter?.notifyItemRangeRemoved(0, count)
+            rvTweets.adapter?.notifyItemRangeInserted(0, loadedTweets.size)
         } else {
             val lastIndex = this.tweets.size
             this.tweets.addAll(loadedTweets)
-            rvTweets.adapter.notifyItemRangeInserted(lastIndex, loadedTweets.size)
+            rvTweets.adapter?.notifyItemRangeInserted(lastIndex, loadedTweets.size)
         }
-        Log.e("COUNT", "Count=${rvTweets.adapter.itemCount}")
+        Log.e("COUNT", "Count=${rvTweets.adapter?.itemCount}")
     }
 
     override fun hideProgress() {
