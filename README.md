@@ -1,4 +1,4 @@
-Android MVP sample using Twitter Application-Only-Api for search
+Android MVP sample using Twitter Application-Only-Api for search [![Build status](https://build.appcenter.ms/v0.1/apps/e522777d-0c56-42d0-bfd9-98f596324a24/branches/master/badge)](https://appcenter.ms)
 =====
 
 ## About Project
