@@ -1,9 +1,9 @@
 package com.mohsenmb.twitterauthsearchkotlinsample.view.fragment
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -79,11 +79,11 @@ class SearchTweetsFragment : BaseFragment(), SearchTweetsView {
             }
         }
         rvTweets.adapter = tweetsAdapter
-        rvTweets.layoutManager = LinearLayoutManager(context)
-        rvTweets.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        rvTweets.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        rvTweets.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val layoutManager: androidx.recyclerview.widget.LinearLayoutManager = recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager
                 if (layoutManager.findLastVisibleItemPosition() == recyclerView.adapter!!.itemCount - 1) {
                     if (canLoadMore && !srlTweets.isRefreshing) {
                         firstPage = false

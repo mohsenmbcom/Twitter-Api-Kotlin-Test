@@ -1,6 +1,6 @@
 package com.mohsenmb.twitterauthsearchkotlinsample.view.components
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.net.Uri
 import android.text.Html
 import android.view.View

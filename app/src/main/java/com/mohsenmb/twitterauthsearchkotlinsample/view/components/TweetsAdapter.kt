@@ -1,8 +1,8 @@
 package com.mohsenmb.twitterauthsearchkotlinsample.view.components
 
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.mohsenmb.twitterauthsearchkotlinsample.BR
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.row_tweet.view.*
 /**
  * Created by mohsen on 6/11/18.
  */
-class TweetsAdapter(private val tweets: List<Tweet>) : RecyclerView.Adapter<DataBindingViewHolder>() {
+class TweetsAdapter(private val tweets: List<Tweet>) : androidx.recyclerview.widget.RecyclerView.Adapter<DataBindingViewHolder>() {
     lateinit var onHashtagClickListener: OnHashtagClickListener
     lateinit var onTweetClickListener: OnTweetClickListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {

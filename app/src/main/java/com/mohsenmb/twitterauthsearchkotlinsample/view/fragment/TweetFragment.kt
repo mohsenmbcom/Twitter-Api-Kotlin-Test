@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.R.attr.data
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import com.mohsenmb.twitterauthsearchkotlinsample.BR
 import com.mohsenmb.twitterauthsearchkotlinsample.R
 import com.mohsenmb.twitterauthsearchkotlinsample.service.model.Tweet

@@ -2,14 +2,14 @@ package com.mohsenmb.twitterauthsearchkotlinsample
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.Espresso.pressBack
-import android.support.test.espresso.action.ViewActions.*
-import android.support.test.espresso.contrib.RecyclerViewActions
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
-import android.support.v7.widget.RecyclerView
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.rule.ActivityTestRule
+import androidx.test.runner.AndroidJUnit4
+import androidx.recyclerview.widget.RecyclerView
 import com.mohsenmb.twitterauthsearchkotlinsample.view.activity.MainActivity
 import org.junit.Before
 import org.junit.Rule
@@ -81,7 +81,7 @@ class MainActivityTest {
 
         // scroll to the end of the list
         onView(withId(R.id.rvTweets))
-                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(9))
+                .perform(RecyclerViewActions.scrollToPosition<androidx.recyclerview.widget.RecyclerView.ViewHolder>(9))
 
 
         // wait for the next page loading
@@ -93,7 +93,7 @@ class MainActivityTest {
 
         // scroll to the end of the list
         onView(withId(R.id.rvTweets))
-                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(19))
+                .perform(RecyclerViewActions.scrollToPosition<androidx.recyclerview.widget.RecyclerView.ViewHolder>(19))
 
 
         // wait for 1.5 Second
@@ -106,7 +106,7 @@ class MainActivityTest {
         // click on the 18th item (an item of the second page) to show the details fragment
         onView(withId(R.id.rvTweets))
                 .perform(RecyclerViewActions
-                        .actionOnItemAtPosition<RecyclerView.ViewHolder>(18, ChildViewAction.clickChildViewWithId(R.id.btnViewTweet)))
+                        .actionOnItemAtPosition<androidx.recyclerview.widget.RecyclerView.ViewHolder>(18, ChildViewAction.clickChildViewWithId(R.id.btnViewTweet)))
 
         // wait for 1.5 Second
         try {
@@ -149,7 +149,7 @@ class MainActivityTest {
 
         // scroll to the end of the list
         onView(withId(R.id.rvTweets))
-                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(9))
+                .perform(RecyclerViewActions.scrollToPosition<androidx.recyclerview.widget.RecyclerView.ViewHolder>(9))
 
         // wait for the next page loading
         try {
@@ -175,7 +175,7 @@ class MainActivityTest {
 
         // scroll to the end of the list
         onView(withId(R.id.rvTweets))
-                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(19))
+                .perform(RecyclerViewActions.scrollToPosition<androidx.recyclerview.widget.RecyclerView.ViewHolder>(19))
 
 
         // wait for 1.5 Second
@@ -188,7 +188,7 @@ class MainActivityTest {
         // click on the 18th item (an item of the second page) to show the details fragment
         onView(withId(R.id.rvTweets))
                 .perform(RecyclerViewActions
-                        .actionOnItemAtPosition<RecyclerView.ViewHolder>(14, ChildViewAction.clickChildViewWithId(R.id.btnViewTweet)))
+                        .actionOnItemAtPosition<androidx.recyclerview.widget.RecyclerView.ViewHolder>(14, ChildViewAction.clickChildViewWithId(R.id.btnViewTweet)))
 
         // wait for 1.5 Second
         try {
@@ -200,7 +200,7 @@ class MainActivityTest {
         // click on the 18th item (an item of the second page) to show the details fragment
         onView(withId(R.id.rvTweets))
                 .perform(RecyclerViewActions
-                        .actionOnItemAtPosition<RecyclerView.ViewHolder>(15, ChildViewAction.clickChildViewWithId(R.id.btnViewTweet)))
+                        .actionOnItemAtPosition<androidx.recyclerview.widget.RecyclerView.ViewHolder>(15, ChildViewAction.clickChildViewWithId(R.id.btnViewTweet)))
 
         // wait for 1.5 Second
         try {
@@ -229,7 +229,7 @@ class MainActivityTest {
 
         // scroll to the top of the list
         onView(withId(R.id.rvTweets))
-                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
+                .perform(RecyclerViewActions.scrollToPosition<androidx.recyclerview.widget.RecyclerView.ViewHolder>(0))
 
         // wait for 1.5 Sec
         try {
